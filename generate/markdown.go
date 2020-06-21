@@ -40,7 +40,7 @@ func (g *generate) parse_message(name string) *utils.Message {
 // json_parse json parse for message
 func (g *generate) json_parse(messageName string) template.HTML {
 	statistics := make(map[string]bool, 0)
-	data, _ := json.MarshalIndent(g.encoder.encode(g, g.Data.Messages[messageName].Fields, statistics), "", "\t")
+	data, _ := json.MarshalIndent(g.encoder.encode(g, g.Data.Messages[messageName].Fields, statistics), "", "  ")
 	return template.HTML(string(data))
 }
 

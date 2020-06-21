@@ -35,7 +35,7 @@
 **<font size=2>示例</font>**
 ``` json
 {
-	"name": ""
+  "name": ""
 }
 ```
 + <font size=3>响应</font>
@@ -48,19 +48,19 @@
 **<font size=2>示例</font>**
 ``` json
 {
-	"data": [
-		{
-			"name": "",
-			"routers": {
-				"name": "",
-				"routers": null
-			}
-		}
-	],
-	"resp": {
-		"code": 0,
-		"mess": ""
-	}
+  "data": [
+    {
+      "name": "",
+      "routers": {
+        "name": "",
+        "routers": null
+      }
+    }
+  ],
+  "resp": {
+    "code": 0,
+    "mess": ""
+  }
 }
 ```
 ---
@@ -78,9 +78,9 @@
 **<font size=2>示例</font>**
 ``` json
 {
-	"names": [
-		""
-	]
+  "names": [
+    ""
+  ]
 }
 ```
 + <font size=3>响应</font>
@@ -92,10 +92,10 @@
 **<font size=2>示例</font>**
 ``` json
 {
-	"resp": {
-		"code": 0,
-		"mess": ""
-	}
+  "resp": {
+    "code": 0,
+    "mess": ""
+  }
 }
 ```
 ---
@@ -114,11 +114,11 @@
 **<font size=2>示例</font>**
 ``` json
 {
-	"user": {
-		"age": 0,
-		"name": "",
-		"status": 0
-	}
+  "user": {
+    "age": 0,
+    "name": "",
+    "status": 0
+  }
 }
 ```
 + <font size=3>响应</font>
@@ -130,10 +130,10 @@
 **<font size=2>示例</font>**
 ``` json
 {
-	"resp": {
-		"code": 0,
-		"mess": ""
-	}
+  "resp": {
+    "code": 0,
+    "mess": ""
+  }
 }
 ```
 ---
@@ -151,7 +151,7 @@
 **<font size=2>示例</font>**
 ``` json
 {
-	"name": ""
+  "name": ""
 }
 ```
 + <font size=3>响应</font>
@@ -164,17 +164,17 @@
 **<font size=2>示例</font>**
 ``` json
 {
-	"data": [
-		{
-			"age": 0,
-			"name": "",
-			"status": 0
-		}
-	],
-	"resp": {
-		"code": 0,
-		"mess": ""
-	}
+  "data": [
+    {
+      "age": 0,
+      "name": "",
+      "status": 0
+    }
+  ],
+  "resp": {
+    "code": 0,
+    "mess": ""
+  }
 }
 ```
 ---
