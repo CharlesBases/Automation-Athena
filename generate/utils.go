@@ -3,7 +3,7 @@ package generate
 import (
 	"fmt"
 
-	"Athena/utils"
+	"protoc-gen-doc/utils"
 )
 
 type encode struct{}

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"Athena/generate"
-	"Athena/utils"
+	"protoc-gen-doc/generate"
+	"protoc-gen-doc/utils"
 )
 
 func main() {

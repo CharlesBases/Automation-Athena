@@ -3,7 +3,6 @@ package utils
 import (
 	"fmt"
 	"io"
-	"os"
 	"strings"
 
 	"google.golang.org/protobuf/proto"
@@ -124,12 +123,4 @@ func trim_string(source string, prefixs ...string) string {
 		}
 	}
 	return source
-}
-
-// tofile .
-func tofile(datas []byte) {
-	file, _ := os.OpenFile("protofile", os.O_CREATE|os.O_RDWR, 0755)
-	defer file.Close()
-
-	file.Write(datas)
 }

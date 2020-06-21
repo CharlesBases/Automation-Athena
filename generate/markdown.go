@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"html/template"
 
-	"Athena/utils"
+	"protoc-gen-doc/utils"
 )
 
 // Markdown generate markdown

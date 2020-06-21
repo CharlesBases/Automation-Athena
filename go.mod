@@ -1,4 +1,4 @@
-module Athena
+module protoc-gen-doc
 
 go 1.14
 

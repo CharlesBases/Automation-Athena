@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "proto/auth/base.proto";
 
-option go_package = "github.com/charlesbases/Automation-Athena/example/proto/auth";
+option go_package = "github.com/charlesbases/protoc-gen-doc/example/proto/auth";
 
 package auth;
 
