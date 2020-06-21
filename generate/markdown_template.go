@@ -6,7 +6,6 @@ Package {{$packagename}}
 ---
 ## 导航 <a name="top"> </a>
 + [服务](#srv)
-+ [函数](#mtd)
 + [结构](#msg)
 + [枚举](#enu)
 ---
@@ -14,17 +13,17 @@ Package {{$packagename}}
 ## 服务 <a name="srv"> </a>
 
 {{range $serviceName, $service := .Services -}}
-+ {{$service.ServiceName}}  [{{$service.Description}}]
++ <font size=3>{{$service.ServiceName}}  [{{$service.Description}}]</font>
   {{range $methodindex, $method := $service.Methods -}}
-  + [{{$method.MethodName}}](#{{$method.MethodName}})   [{{$method.Description}}]
+  + <font size=2>[{{$method.MethodName}}](#{{$method.MethodName}})   [{{$method.Description}}]</font>
   {{end}}
 {{end}}
 ---
 
-## 函数 <a name="mtd"> </a>
+## 函数
 {{range $serviceName, $service := .Services -}}
 {{range $methodindex, $method := $service.Methods -}}
-#### {{$method.MethodName}} <a name="{{$method.MethodName}}"> </a> <font size=2>[服务](#srv)</font> <font size=2>[函数](#mtd)</font> <font size=2>[结构](#msg)</font> <font size=2>[枚举](#enu)</font>
+#### {{$method.MethodName}} <a name="{{$method.MethodName}}"> </a> <font size=2>[服务](#srv)</font> <font size=2>[结构](#msg)</font> <font size=2>[枚举](#enu)</font>
 {{codeblock}}
 描述: {{$method.Description}}
 路径: [{{$packagename}}/{{$service.Uri}}/{{$method.Uri}}]
@@ -59,11 +58,11 @@ Package {{$packagename}}
 | <font size=2>类型</font> | <font size=2>描述</font> |
 | :----------------------: | :---------------------: |
 {{range $messagename, $message := .Messages -}}
-| [{{$message.MessageName}}](#{{$message.MessageName}}) | {{$message.Description}} |
+| <font size=2>[{{$message.MessageName}}](#{{$message.MessageName}})</font> | <font size=2>{{$message.Description}}</font> |
 {{end}}
 ---
 {{range $messagename, $message := .Messages -}}
-+ {{$message.MessageName}} <a name="{{$message.MessageName}}"> </a> <font size=2>[服务](#srv)</font> <font size=2>[函数](#mtd)</font> <font size=2>[结构](#msg)</font> <font size=2>[枚举](#enu)</font>
++ {{$message.MessageName}} <a name="{{$message.MessageName}}"> </a> <font size=2>[服务](#srv)</font> <font size=2>[结构](#msg)</font> <font size=2>[枚举](#enu)</font>
 {{codeblock}}
 描述: {{$message.Description}}
 {{codeblock}}
@@ -77,11 +76,11 @@ Package {{$packagename}}
 ---
 ## 枚举 <a name="enu"> </a>
 {{range $enumname, $enum := .Enums -}}
-+ {{$enum.EnumName}} <a name="{{$enum.EnumName}}"> </a> <font size=2>[服务](#srv)</font> <font size=2>[函数](#mtd)</font> <font size=2>[结构](#msg)</font> <font size=2>[枚举](#enu)</font>
++ {{$enum.EnumName}} <a name="{{$enum.EnumName}}"> </a> <font size=2>[服务](#srv)</font> <font size=2>[结构](#msg)</font> <font size=2>[枚举](#enu)</font>
 | <font size=2>键</font> | <font size=2>值</font> | <font size=2>描述</font> |
 | :--------------------: | :--------------------: | :---------------------: |
 {{range $fieldindex, $field := $enum.Fields -}}
-| {{$field.EnumFieldName}} | {{$field.EnumFieldValue}} | {{$enum.Description}}: {{$field.Description}} |
+| <font size=2>{{$field.EnumFieldName}}</font> | <font size=2>{{$field.EnumFieldValue}}</font> | <font size=2>{{$enum.Description}}:    {{$field.Description}}</font> |
 {{end}}
 {{end}}
 ---

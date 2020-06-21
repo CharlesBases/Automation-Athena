@@ -44,11 +44,13 @@ func new_comments() comments {
 }
 
 // get get comment by path
-func (cs comments) get(path ...int) string {
+func (cs comments) get(name string, path ...int) string {
 	if comment, ok := cs[fmt.Sprintf("%v", path)]; ok {
-		return comment.Leading
+		if comment.Leading != "" {
+			return comment.Leading
+		}
 	}
-	return ""
+	return name
 }
 
 // parse parse comment to desc and uri
@@ -56,7 +58,15 @@ func (cs comments) parse(name string, path ...int) *desc {
 	source := ""
 	desc := new(desc)
 	if json.Unmarshal([]byte(source), desc) != nil {
-		desc.desc = cs[fmt.Sprintf("%v", path)].Leading
+		desc.path = name
+		if leading, ok := cs[fmt.Sprintf("%v", path)]; ok {
+			desc.desc = leading.Leading
+		}
+	}
+	if desc.desc == "" {
+		desc.desc = name
+	}
+	if desc.path == "" {
 		desc.path = name
 	}
 	return desc

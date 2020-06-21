@@ -98,10 +98,32 @@ func (*infor) push_enum(enumName string, description string) *Enum {
 // split_type split by "." and return package and type name
 func split_type(typename string) [2]string {
 	list := strings.Split(typename, ".")
-	if len(list) != 3 {
+	if len(list) < 3 {
 		ThrowCheck(fmt.Errorf("split type error: [%s]", typename))
 	}
-	return [2]string{list[1], list[2]}
+	return [2]string{list[1], strings.Join(list[2:], "_")}
+}
+
+// trim_string trim prefix and suffix
+func trim_string(source string, prefixs ...string) string {
+	source = strings.TrimSpace(source)
+	for _, prefix := range prefixs {
+		for {
+			if strings.HasPrefix(source, prefix) {
+				source = strings.TrimPrefix(source, prefix)
+				continue
+			}
+			break
+		}
+		for {
+			if strings.HasSuffix(source, prefix) {
+				source = strings.TrimSuffix(source, prefix)
+				continue
+			}
+			break
+		}
+	}
+	return source
 }
 
 // tofile .

@@ -47,14 +47,30 @@ func (*protofile) parse_proto() {
 		for messageIndex, messageinfor := range file.GetMessageType() {
 			message := messageinfor
 
-			Information.Data[packagename].Messages[message.GetName()] = comments.parse_message(messageIndex, message)
+			path := []int{PATH_MESSAGE, messageIndex}
+
+			Information.Data[packagename].Messages[message.GetName()] = comments.parse_message(path, message)
+
+			for nestedIndex, nestedinfor := range message.GetNestedType() {
+				nested := nestedinfor
+
+				Information.Data[packagename].Messages[strings.Join([]string{message.GetName(), nested.GetName()}, "_")] = comments.parse_message_nested(message.GetName(), append(path, PATH_MESSAGE_MESSAGE, nestedIndex), nested)
+			}
+
+			for enumIndex, enuminfor := range message.GetEnumType() {
+				enum := enuminfor
+
+				Information.Data[packagename].Enums[strings.Join([]string{message.GetName(), enum.GetName()}, "_")] = comments.parse_message_enum(message.GetName(), append(path, PATH_MESSAGE_ENUM, enumIndex), enum)
+			}
 		}
 
 		// parse enum
 		for enumIndex, enuminfor := range file.GetEnumType() {
 			enum := enuminfor
 
-			Information.Data[packagename].Enums[enum.GetName()] = comments.parse_enum(enumIndex, enum)
+			path := []int{PATH_ENUM, enumIndex}
+
+			Information.Data[packagename].Enums[enum.GetName()] = comments.parse_enum(path, enum)
 		}
 
 		// parse service
@@ -76,12 +92,12 @@ func (*protofile) parse_comment(infor *descriptorpb.SourceCodeInfo) comments {
 
 		detached := make([]string, 0)
 		for _, val := range location.GetLeadingDetachedComments() {
-			detached = append(detached, strings.TrimSpace(strings.Replace(val, "\n ", "\n", -1)))
+			detached = append(detached, trim_string(val, "*", "\n"))
 		}
 
 		comments[fmt.Sprintf("%v", location.GetPath())] = &comment{
-			Leading:         strings.TrimSpace(strings.ReplaceAll(location.GetLeadingComments(), "\n ", "\n")),
-			Trailing:        strings.TrimSpace(strings.ReplaceAll(location.GetTrailingComments(), "\n ", "\n")),
+			Leading:         trim_string(location.GetLeadingComments(), "*", "\n"),
+			Trailing:        trim_string(location.GetTrailingComments(), "*", "\n"),
 			LeadingDetached: detached,
 		}
 	}
@@ -90,53 +106,77 @@ func (*protofile) parse_comment(infor *descriptorpb.SourceCodeInfo) comments {
 
 // parseservice parse service in proto
 func (cs comments) parse_service(serviceIndex int, protoService *descriptorpb.ServiceDescriptorProto) *Service {
-	serviceInfor := Information.push_servce(protoService.GetName(), cs.parse(protoService.GetName(), PATH_SERVICE, serviceIndex))
+	path := []int{PATH_SERVICE, serviceIndex}
+
+	serviceInfor := Information.push_servce(protoService.GetName(), cs.parse(protoService.GetName(), path...))
 	for methodindex, methodinfor := range protoService.GetMethod() {
 		method := methodinfor
-		serviceInfor.Methods = append(serviceInfor.Methods, cs.parse_method(serviceIndex, methodindex, method))
+		serviceInfor.Methods = append(serviceInfor.Methods, cs.parse_method(path, methodindex, method))
 	}
 	return serviceInfor
 }
 
 // parsemethod parse method in service
-func (cs comments) parse_method(serviceIndex int, methodindex int, protoMethod *descriptorpb.MethodDescriptorProto) *Method {
-	methodInfor := Information.push_method(protoMethod.GetName(), cs.parse(protoMethod.GetName(), PATH_SERVICE, serviceIndex, PATH_SERVICE_METHOD, methodindex))
+func (cs comments) parse_method(path []int, methodindex int, protoMethod *descriptorpb.MethodDescriptorProto) *Method {
+	methodInfor := Information.push_method(protoMethod.GetName(), cs.parse(protoMethod.GetName(), append(path, PATH_SERVICE_METHOD, methodindex)...))
 	methodInfor.RequestParam = split_type(protoMethod.GetInputType())[1]
 	methodInfor.ResponseParam = split_type(protoMethod.GetOutputType())[1]
 	return methodInfor
 }
 
 // parse_message parse message in proto
-func (cs comments) parse_message(messageIndex int, protoMessage *descriptorpb.DescriptorProto) *Message {
-	messageInfor := Information.push_message(protoMessage.GetName(), cs.get(PATH_MESSAGE, messageIndex))
+func (cs comments) parse_message(path []int, protoMessage *descriptorpb.DescriptorProto) *Message {
+	messageInfor := Information.push_message(protoMessage.GetName(), cs.get(protoMessage.GetName(), path...))
 	for fieldIndex, fieldinfor := range protoMessage.GetField() {
 		field := fieldinfor
-		messageInfor.Fields = append(messageInfor.Fields, cs.parse_field(messageIndex, fieldIndex, messageInfor.MessageName, field))
+		messageInfor.Fields = append(messageInfor.Fields, cs.parse_field(append(path, PATH_MESSAGE_FIELD, fieldIndex), messageInfor.MessageName, field))
 	}
 	return messageInfor
 }
 
-// parseenum parse enum in proto
-func (cs comments) parse_enum(enumIndex int, protoEnum *descriptorpb.EnumDescriptorProto) *Enum {
-	enumInfor := Information.push_enum(protoEnum.GetName(), cs.get(PATH_ENUM, enumIndex))
+// parse_message_nested parse message nested in message
+func (cs comments) parse_message_nested(messageName string, path []int, protoMessageNested *descriptorpb.DescriptorProto) *Message {
+	messageNestedName := strings.Join([]string{messageName, protoMessageNested.GetName()}, "_")
+	messageInfor := Information.push_message(messageNestedName, cs.get(messageNestedName, path...))
+	for fieldIndex, fieldinfor := range protoMessageNested.GetField() {
+		field := fieldinfor
+		messageInfor.Fields = append(messageInfor.Fields, cs.parse_field(append(path, PATH_MESSAGE_FIELD, fieldIndex), messageInfor.MessageName, field))
+	}
+	return messageInfor
+}
+
+// parse_message_enum parse enum in message
+func (cs comments) parse_message_enum(messageName string, path []int, protoEnum *descriptorpb.EnumDescriptorProto) *Enum {
+	messageEnumName := strings.Join([]string{messageName, protoEnum.GetName()}, "_")
+	enumInfor := Information.push_enum(messageEnumName, cs.get(messageEnumName, path...))
 	for enumFieldIndex, enumfieldinfor := range protoEnum.GetValue() {
 		enumField := enumfieldinfor
-		enumInfor.Fields = append(enumInfor.Fields, cs.parse_enum_field(enumIndex, enumFieldIndex, enumField))
+		enumInfor.Fields = append(enumInfor.Fields, cs.parse_enum_field(append(path, PATH_ENUM_VALUE, enumFieldIndex), enumField))
+	}
+	return enumInfor
+}
+
+// parseenum parse enum in proto
+func (cs comments) parse_enum(path []int, protoEnum *descriptorpb.EnumDescriptorProto) *Enum {
+	enumInfor := Information.push_enum(protoEnum.GetName(), cs.get(protoEnum.GetName(), path...))
+	for enumFieldIndex, enumfieldinfor := range protoEnum.GetValue() {
+		enumField := enumfieldinfor
+		enumInfor.Fields = append(enumInfor.Fields, cs.parse_enum_field(append(path, PATH_ENUM_VALUE, enumFieldIndex), enumField))
 	}
 	return enumInfor
 }
 
 // parse_enum_field parse field in enum
-func (cs comments) parse_enum_field(enumIndex int, enumFieldIndex int, protoEnumField *descriptorpb.EnumValueDescriptorProto) *EnumField {
+func (cs comments) parse_enum_field(path []int, protoEnumField *descriptorpb.EnumValueDescriptorProto) *EnumField {
 	return &EnumField{
 		EnumFieldName:  protoEnumField.GetName(),
 		EnumFieldValue: protoEnumField.GetNumber(),
-		Description:    cs.get(PATH_ENUM, enumIndex, PATH_ENUM_VALUE, enumFieldIndex),
+		Description:    cs.get(protoEnumField.GetName(), path...),
 	}
 }
 
 // parse_field parse field in message
-func (cs comments) parse_field(messageIndex int, fieldIndex int, messageName string, protoMessageField *descriptorpb.FieldDescriptorProto) *Field {
+func (cs comments) parse_field(path []int, messageName string, protoMessageField *descriptorpb.FieldDescriptorProto) *Field {
 	fieldInfor := new(Field)
 
 	fieldInfor.MessageName = messageName
@@ -163,7 +203,7 @@ func (cs comments) parse_field(messageIndex int, fieldIndex int, messageName str
 		fieldInfor.ProtoTypeName = descriptorpb.FieldDescriptorProto_Type_name[int32(fieldInfor.ProtoType)]
 	}
 
-	fieldInfor.Description = cs.get(PATH_MESSAGE, messageIndex, PATH_MESSAGE_FIELD, fieldIndex)
+	fieldInfor.Description = cs.get(fieldInfor.JsonName, path...)
 
 	return fieldInfor
 }
