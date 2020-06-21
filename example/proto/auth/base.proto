@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option go_package = "github.com/charlesbases/protoc-gen-doc/example/proto/auth";
+
+package auth;
+
+enum Status {
+	Unknown = 0;
+	Enabled = 1;
+	Disable = 2;
+}
+
+enum Gender {
+	Man = 0;
+	Woman = 1;
+}
+
+// Response 返回
+message Response {
+	// code 状态
+	int64 code = 1;
+	// mess 信息
+	string mess = 2;
+}

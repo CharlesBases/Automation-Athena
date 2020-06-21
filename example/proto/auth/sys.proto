@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+import "proto/auth/base.proto";
+
+option go_package = "github.com/charlesbases/protoc-gen-doc/example/proto/auth";
+
+package auth;
+
+// Sys 系统设置
+service Sys {
+	// Get 获取系统设置
+	rpc Get(GetRequest) returns (GetResponse) {}
+	// Del 删除系统设置
+	rpc Del(DelRequest) returns (DelResponse) {}
+}
+
+// System 系统设置信息
+message System {
+	// name 名称
+	string name = 1;
+	// routers 子项
+	System routers = 2;
+}
+
+// GetRequest rpc-Get request message
+message GetRequest {
+	// name 名称
+	string name = 1;
+}
+
+// GetResponse rpc-Get response message
+message GetResponse {
+	// resp 返回
+	Response resp = 1;
+	// data 内容
+	repeated System data = 2;
+}
+
+// DelRequest rpc-Del request message
+message DelRequest {
+	// names 名称
+	repeated string names = 1;
+}
+
+// DelResponse rpc-Del response message
+message DelResponse {
+	// resp 返回
+	Response resp = 1;
+}
