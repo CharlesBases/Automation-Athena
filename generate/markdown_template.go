@@ -29,6 +29,7 @@ Package {{$packagename}}
 路径: [{{$packagename}}/{{$service.Uri}}/{{$method.Uri}}]
 {{codeblock}}
 + <font size=3>请求</font>
+
 {{$message := parsemessage $method.RequestParam -}}
 | <font size=2>字段</font> | <font size=2>类型</font> | <font size=2>标签</font> | <font size=2>描述</font> |
 | :----------------------: | :---------------------: | :----------------------: | :----------------------: |
@@ -40,6 +41,7 @@ Package {{$packagename}}
 {{jsonparse $message.MessageName}}
 {{codeblock}}
 + <font size=3>响应</font>
+
 {{$message := parsemessage $method.ResponseParam -}}
 | <font size=2>字段</font> | <font size=2>类型</font> | <font size=2>标签</font> | <font size=2>描述</font> |
 | :----------------------: | :---------------------: | :----------------------: | :----------------------: |
@@ -55,6 +57,7 @@ Package {{$packagename}}
 {{end}}
 
 ## 结构 <a name="msg"> </a>
+
 | <font size=2>类型</font> | <font size=2>描述</font> |
 | :----------------------: | :---------------------: |
 {{range $messagename, $message := .Messages -}}
@@ -66,6 +69,7 @@ Package {{$packagename}}
 {{codeblock}}
 描述: {{$message.Description}}
 {{codeblock}}
+
 | <font size=2>字段</font> | <font size=2>类型</font> | <font size=2>标签</font> | <font size=2>描述</font> |
 | :----------------------: | :---------------------: | :----------------------: | :----------------------: |
 {{range $fieldindex, $field := $message.Fields -}}
@@ -75,6 +79,7 @@ Package {{$packagename}}
 
 ---
 ## 枚举 <a name="enu"> </a>
+
 {{range $enumname, $enum := .Enums -}}
 + {{$enum.EnumName}} <a name="{{$enum.EnumName}}"> </a> <font size=2>[服务](#srv)</font> <font size=2>[结构](#msg)</font> <font size=2>[枚举](#enu)</font>
 | <font size=2>键</font> | <font size=2>值</font> | <font size=2>描述</font> |
