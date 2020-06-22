@@ -186,7 +186,7 @@ func (cs comments) parse_field(path []int, messageName string, protoMessageField
 	fieldInfor.ProtoType = protoMessageField.GetType()
 	fieldInfor.ProtoNumber = protoMessageField.GetNumber()
 
-	fieldInfor.JsonName = protoMessageField.GetJsonName()
+	fieldInfor.JsonName = protoMessageField.GetName()
 	fieldInfor.JsonLabel = protoLabel2JsonLabel[protoMessageField.GetLabel()]
 	fieldInfor.JsonType = protoType2JsonType[protoMessageField.GetType()]
 	fieldInfor.JsonDefaultValue = jsonTypeDefaultValue[fieldInfor.JsonType]
