@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"html/template"
 
-	"protoc-gen-doc/utils"
+	"github.com/CharlesBases/protoc-gen-doc/utils"
 )
 
 // Markdown generate markdown

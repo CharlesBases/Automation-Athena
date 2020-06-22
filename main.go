@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"protoc-gen-doc/generate"
-	"protoc-gen-doc/utils"
+	"github.com/CharlesBases/protoc-gen-doc/generate"
+	"github.com/CharlesBases/protoc-gen-doc/utils"
 )
 
 func main() {

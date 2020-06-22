@@ -1,4 +1,4 @@
-module protoc-gen-doc
+module github.com/CharlesBases/protoc-gen-doc
 
 go 1.14
 
