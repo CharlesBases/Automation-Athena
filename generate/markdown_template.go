@@ -15,7 +15,7 @@ Package {{$packagename}}
 {{range $serviceName, $service := .Services -}}
 + <font size=3>{{$service.ServiceName}}  [{{$service.Description}}]</font>
   {{range $methodindex, $method := $service.Methods -}}
-  + <font size=2>[{{$method.MethodName}}](#{{$method.MethodName}})   [{{$method.Description}}]</font>
+  + <font size=2>[{{$method.MethodName}}](#{{$service.ServiceName}}.{{$method.MethodName}})   [{{$method.Description}}]</font>
   {{end}}
 {{end}}
 ---
@@ -23,7 +23,7 @@ Package {{$packagename}}
 ## 函数
 {{range $serviceName, $service := .Services -}}
 {{range $methodindex, $method := $service.Methods -}}
-#### {{$method.MethodName}} <a name="{{$method.MethodName}}"> </a> <font size=2>[服务](#srv)</font> <font size=2>[结构](#msg)</font> <font size=2>[枚举](#enu)</font>
+#### {{$method.MethodName}} <a name="{{$service.ServiceName}}.{{$method.MethodName}}"> </a> <font size=2>[服务](#srv)</font> <font size=2>[结构](#msg)</font> <font size=2>[枚举](#enu)</font>
 {{codeblock}}
 描述: {{$method.Description}}
 路径: [{{$packagename}}/{{$service.Uri}}/{{$method.Uri}}]
