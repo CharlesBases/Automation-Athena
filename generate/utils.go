@@ -3,7 +3,7 @@ package generate
 import (
 	"fmt"
 
-	"protoc-gen-doc/utils"
+	"github.com/CharlesBases/protoc-gen-doc/utils"
 )
 
 type encode struct{}
