@@ -10,11 +10,6 @@ enum Status {
 	Disable = 2;
 }
 
-enum Gender {
-	Man = 0;
-	Woman = 1;
-}
-
 // Response 返回
 message Response {
 	// code 状态

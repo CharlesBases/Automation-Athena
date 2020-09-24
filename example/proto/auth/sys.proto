@@ -8,10 +8,16 @@ package auth;
 
 // Sys 系统设置
 service Sys {
-	// Get 获取系统设置
+  // List 获取系统设置
+  rpc List (ListRequest) returns (ListResponse) {}
+	// Add 获取系统设置
+	rpc Add(AddRequest) returns (AddResponse) {}
+	// Get 删除系统设置
 	rpc Get(GetRequest) returns (GetResponse) {}
-	// Del 删除系统设置
-	rpc Del(DelRequest) returns (DelResponse) {}
+  // Set 获取系统设置
+  rpc Set (SetRequest) returns (SetResponse) {}
+  // Del 删除系统设置
+  rpc Del (DelRequest) returns (DelResponse) {}
 }
 
 // System 系统设置信息
@@ -20,6 +26,34 @@ message System {
 	string name = 1;
 	// routers 子项
 	System routers = 2;
+}
+
+// ListRequest rpc-List request message
+message ListRequest {
+  // name 名称
+  string name = 1;
+}
+
+// ListResponse rpc-List response message
+message ListResponse {
+  // resp 返回
+  Response resp = 1;
+  // data 内容
+  repeated System data = 2;
+}
+
+// AddRequest rpc-Add request message
+message AddRequest {
+  // name 名称
+  string name = 1;
+}
+
+// AddResponse rpc-Add response message
+message AddResponse {
+  // resp 返回
+  Response resp = 1;
+  // data 内容
+  repeated System data = 2;
 }
 
 // GetRequest rpc-Get request message
@@ -34,6 +68,18 @@ message GetResponse {
 	Response resp = 1;
 	// data 内容
 	repeated System data = 2;
+}
+
+// SetRequest rpc-Set request message
+message SetRequest {
+  // names 名称
+  repeated string names = 1;
+}
+
+// SetResponse rpc-Set response message
+message SetResponse {
+  // resp 返回
+  Response resp = 1;
 }
 
 // DelRequest rpc-Del request message
