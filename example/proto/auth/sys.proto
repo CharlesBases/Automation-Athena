@@ -8,16 +8,16 @@ package auth;
 
 // Sys 系统设置
 service Sys {
-  // List 获取系统设置
-  rpc List (ListRequest) returns (ListResponse) {}
-	// Add 获取系统设置
-	rpc Add(AddRequest) returns (AddResponse) {}
-	// Get 删除系统设置
-	rpc Get(GetRequest) returns (GetResponse) {}
-  // Set 获取系统设置
-  rpc Set (SetRequest) returns (SetResponse) {}
-  // Del 删除系统设置
-  rpc Del (DelRequest) returns (DelResponse) {}
+  // SysList 获取系统设置
+  rpc SysList (SysListRequest) returns (SysListResponse) {}
+	// SysAdd 获取系统设置
+	rpc SysAdd(SysAddRequest) returns (SysAddResponse) {}
+	// SysGet 删除系统设置
+	rpc SysGet(SysGetRequest) returns (SysGetResponse) {}
+  // SysSet 获取系统设置
+  rpc SysSet (SysSetRequest) returns (SysSetResponse) {}
+  // SysDel 删除系统设置
+  rpc SysDel (SysDelRequest) returns (SysDelResponse) {}
 }
 
 // System 系统设置信息
@@ -28,68 +28,68 @@ message System {
 	System routers = 2;
 }
 
-// ListRequest rpc-List request message
-message ListRequest {
+// SysListRequest rpc-SysList request message
+message SysListRequest {
   // name 名称
   string name = 1;
 }
 
-// ListResponse rpc-List response message
-message ListResponse {
+// SysListResponse rpc-SysList response message
+message SysListResponse {
   // resp 返回
   Response resp = 1;
   // data 内容
   repeated System data = 2;
 }
 
-// AddRequest rpc-Add request message
-message AddRequest {
+// SysAddRequest rpc-SysAdd request message
+message SysAddRequest {
   // name 名称
   string name = 1;
 }
 
-// AddResponse rpc-Add response message
-message AddResponse {
+// SysAddResponse rpc-SysAdd response message
+message SysAddResponse {
   // resp 返回
   Response resp = 1;
   // data 内容
   repeated System data = 2;
 }
 
-// GetRequest rpc-Get request message
-message GetRequest {
+// SysGetRequest rpc-SysGet request message
+message SysGetRequest {
 	// name 名称
 	string name = 1;
 }
 
-// GetResponse rpc-Get response message
-message GetResponse {
+// SysGetResponse rpc-SysGet response message
+message SysGetResponse {
 	// resp 返回
 	Response resp = 1;
 	// data 内容
 	repeated System data = 2;
 }
 
-// SetRequest rpc-Set request message
-message SetRequest {
+// SysSetRequest rpc-SysSet request message
+message SysSetRequest {
   // names 名称
   repeated string names = 1;
 }
 
-// SetResponse rpc-Set response message
-message SetResponse {
+// SysSetResponse rpc-SysSet response message
+message SysSetResponse {
   // resp 返回
   Response resp = 1;
 }
 
-// DelRequest rpc-Del request message
-message DelRequest {
+// SysDelRequest rpc-SysDel request message
+message SysDelRequest {
 	// names 名称
 	repeated string names = 1;
 }
 
-// DelResponse rpc-Del response message
-message DelResponse {
+// SysDelResponse rpc-SysDel response message
+message SysDelResponse {
 	// resp 返回
 	Response resp = 1;
 }

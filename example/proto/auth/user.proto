@@ -8,16 +8,16 @@ package auth;
 
 // User
 service User {
-  // List 获取用户列表
-  rpc List (ListRequest) returns (ListResponse) {}
-	// Add 添加用户
-	rpc Add (AddRequest) returns (AddResponse) {}
-  // Get
-  rpc Get (GetRequest) returns (GetResponse) {}
-  // Del
-  rpc Del (DelRequest) returns (DelResponse) {}
-  // Set
-  rpc Set (SetRequest) returns (SetResponse) {}
+  // UserList 获取用户列表
+  rpc UserList (UserListRequest) returns (UserListResponse) {}
+	// UserAdd 添加用户
+	rpc UserAdd (UserAddRequest) returns (UserAddResponse) {}
+  // UserGet
+  rpc UserGet (UserGetRequest) returns (UserGetResponse) {}
+  // UserDel
+  rpc UserDel (UserDelRequest) returns (UserDelResponse) {}
+  // UserSet
+  rpc UserSet (UserSetRequest) returns (UserSetResponse) {}
 }
 
 // UserInfo 用户信息
@@ -30,64 +30,64 @@ message UserInfo {
 	Status status = 3;
 }
 
-// ListRequest rpc-List request message
-message ListRequest {
+// UserListRequest rpc-UserList request message
+message UserListRequest {
   // name 性别
   string name = 1;
 }
 
-// ListResponse rpc-List response message
-message ListResponse {
+// UserListResponse rpc-UserList response message
+message UserListResponse {
   // resp 返回
   Response resp = 1;
   // 内容
   repeated UserInfo data = 2;
 }
 
-// AddRequest rpc-Add request message
-message AddRequest {
+// UserAddRequest rpc-UserAdd request message
+message UserAddRequest {
 	// user 用户信息
 	UserInfo user = 1;
 }
 
-// Response rpc-Add response message
-message AddResponse {
+// Response rpc-UserAdd response message
+message UserAddResponse {
 	// resp 返回
 	Response resp = 1;
 }
 
-// GetRequest rpc-Get request message
-message GetRequest {
+// UserGetRequest rpc-UserGet request message
+message UserGetRequest {
   // user 用户信息
   UserInfo user = 1;
 }
 
-// GetResponse rpc-Get response message
-message GetResponse {
+// UserGetResponse rpc-UserGet response message
+message UserGetResponse {
   // resp 返回
   Response resp = 1;
 }
 
-// DelRequest rpc-Del request message
-message DelRequest {
+// UserDelRequest rpc-UserDel request message
+message UserDelRequest {
   // user 用户信息
   UserInfo user = 1;
 }
 
-// DelResponse rpc-Del response message
-message DelResponse {
+// UserDelResponse rpc-UserDel response message
+message UserDelResponse {
   // resp 返回
   Response resp = 1;
 }
 
-// SetRequest rpc-Set request message
-message SetRequest {
+// UserSetRequest rpc-UserSet request message
+message UserSetRequest {
   // user 用户信息
   UserInfo user = 1;
 }
 
-// SetResponse rpc-Set response message
-message SetResponse {
+// UserSetResponse rpc-UserSet response message
+message UserSetResponse {
   // resp 返回
   Response resp = 1;
 }
