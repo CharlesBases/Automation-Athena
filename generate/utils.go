@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"strings"
 
 	"github.com/CharlesBases/protoc-gen-doc/utils"
 )
@@ -31,6 +32,7 @@ func (g *generate) Generate(text string) []byte {
 	temp := template.New("document template")
 
 	temp.Funcs(template.FuncMap{
+		"dynamic":      dynamic,
 		"codeblock":    codeblock,
 		"parsemessage": g.parse_message,
 		"jsonparse":    g.json_parse,
@@ -45,6 +47,21 @@ func (g *generate) Generate(text string) []byte {
 	utils.ThrowCheck(html.Execute(&buffer, g.Data))
 
 	return buffer.Bytes()
+}
+
+// dynamic 动态返回一定长度字符
+func dynamic(source string) string {
+	var (
+		length  = 40
+		builder strings.Builder
+	)
+
+	length -= len([]rune(source))
+
+	for i := 0; i < length; i++ {
+		builder.WriteString("·")
+	}
+	return builder.String()
 }
 
 // codeblock markdown 代码块
