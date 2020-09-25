@@ -1,6 +1,6 @@
 package generate
 
-const markdownTemplate = `# {{$packagename := .PackageName -}}
+const Markdown = `# {{$packagename := .PackageName -}}
 Package {{$packagename}}
 
 ---

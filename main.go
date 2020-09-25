@@ -17,6 +17,10 @@ func main() {
 // run generate doc
 func run() {
 	for _, x := range utils.Information.Data {
-		utils.Push(fmt.Sprintf("%s.md", x.PackageName), generate.Generate(x).Markdown())
+		markdown := fmt.Sprintf("%s.md", x.PackageName)
+		utils.Push(markdown, generate.New(markdown, x).Generate(generate.Markdown))
+
+		html := fmt.Sprintf("%s.html", x.PackageName)
+		utils.Push(html, generate.New(html, x).Generate(generate.HTML))
 	}
 }
