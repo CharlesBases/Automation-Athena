@@ -23,6 +23,13 @@ const HTML = `{{$packagename := .PackageName -}}
         padding: 0;
         spacing: 0;
       }
+      .codeblock {
+        background-color: #F5F5F5;
+        padding-left: 5px;
+        padding-bottom: 1px;
+        text-align: left;
+        border: 1px solid #CBCBCB;
+      }
       .pure-table {
         border-collapse: collapse;
         border-spacing: 0;
@@ -93,13 +100,6 @@ const HTML = `{{$packagename := .PackageName -}}
         text-align: center;
         padding: 5px;
       }
-      #codeblock {
-        background-color: #F5F5F5;
-        padding-left: 5px;
-        padding-bottom: 1px;
-        text-align: left;
-        border: 1px solid #CBCBCB;
-      }
     </style>
   </head>
 
@@ -152,7 +152,7 @@ const HTML = `{{$packagename := .PackageName -}}
     {{range $serviceName, $service := .Services -}}
     {{range $methodindex, $method := $service.Methods -}}
     <h2><a id="{{$service.ServiceName}}.{{$method.MethodName}}">{{$method.MethodName}}</a></h2>
-    <div id="codeblock"><font color="#696969">
+    <div class="codeblock"><font color="#696969">
     描述: {{$method.Description}}</br>
     服务: {{$service.Uri}}</br>
     路径: [{{$packagename}}/{{$service.Uri}}/{{$method.Uri}}]</br>
@@ -180,7 +180,7 @@ const HTML = `{{$packagename := .PackageName -}}
       <tbody>
     </table>
     <h4>示例</h4>
-    <pre><div id="codeblock">{{jsonparse $request.MessageName}}</pre></pre>
+    <pre><div class="codeblock">{{jsonparse $request.MessageName}}</div></pre>
     <h3>响应</h3>
     {{$response := parsemessage $method.ResponseParam -}}
     <table class="pure-table">
@@ -204,7 +204,7 @@ const HTML = `{{$packagename := .PackageName -}}
       <tbody>
     </table>
     <h4>示例</h4>
-    <pre><div id="codeblock">{{jsonparse $response.MessageName}}</div></pre>
+    <pre><div class="codeblock">{{jsonparse $response.MessageName}}</div></pre>
     {{end}}
     {{end}}
 
